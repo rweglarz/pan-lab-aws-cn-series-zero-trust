@@ -65,7 +65,7 @@ function deploy_panorama() {
 
     # Deploy resources
     echo -e "\nDeploying Panorama Resources required for Palo Alto Networks Reference Architecture for Zero Trust with VM-Series on AWS"
-    terraform apply -auto-approve -state=~/cn-lab-pan.tfstate
+    terraform apply -auto-approve -state=${HOME}/cn-lab-pan.tfstate
 
     if [ $? -eq 0 ]; then
         echo -e "\nPanorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
@@ -78,7 +78,7 @@ function deploy_panorama() {
 function get_panorama_ip() {
     cd "${lab_base}/terraform/panorama"
 
-    PANORAMA_IP=$(terraform output PANORAMA_IP_ADDRESS | sed -e 's/^"//' -e 's/"$//')
+    PANORAMA_IP=$(terraform output -state=${HOME}/cn-lab-pan.tfstate PANORAMA_IP_ADDRESS | sed -e 's/^"//' -e 's/"$//')
     echo $PANORAMA_IP
 }
 
@@ -98,7 +98,7 @@ function deploy_cnseries_lab() {
 
     # Deploy resources
     echo -e "\nDeploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust with CN-Series on AWS"
-    terraform apply -auto-approve -state=~/cn-lab-cn.tfstate
+    terraform apply -auto-approve -state=${HOME}/cn-lab-cn.tfstate
 
     if [ $? -eq 0 ]; then
         echo -e "\nAWS Zero Trust Reference Architecture with CN-Series Lab Deployment Completed successfully!"
@@ -111,8 +111,8 @@ function deploy_cnseries_lab() {
     # Updating the Panorama IP in CN-Series config file for deployment
     sed -i "s/$HARD_CODED_PANORAMA_IP/$NEW_PANORAMA_IP/" cn-series/pan-cn-mgmt-configmap.yaml
 
-    KUBECTL_CONFIG_COMMAND=$(terraform output kubectl_config_command | sed -e 's/^"//' -e 's/"$//')
-    KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND=$(terraform output kubectl_demo_application_deployment_command | sed -e 's/^"//' -e 's/"$//')
+    KUBECTL_CONFIG_COMMAND=$(terraform output -state=${HOME}/cn-lab-cn.tfstate kubectl_config_command | sed -e 's/^"//' -e 's/"$//')
+    KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND=$(terraform output -state=${HOME}/cn-lab-cn.tfstate kubectl_demo_application_deployment_command | sed -e 's/^"//' -e 's/"$//')
 
     # Running the kubeconfig command as required for the lab
     echo -e "\nRunning the kubeconfig command as required for the lab"
