@@ -52,7 +52,7 @@ users:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       command: aws
-       args:
+      args:
         - --region
         - us-east-1
         - eks
