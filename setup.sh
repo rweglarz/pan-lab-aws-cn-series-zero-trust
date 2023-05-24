@@ -65,7 +65,7 @@ function deploy_panorama() {
 
     # Deploy resources
     echo -e "\nDeploying Panorama Resources required for Palo Alto Networks Reference Architecture for Zero Trust with VM-Series on AWS"
-    terraform apply -auto-approve -state=~/cn-lab.tfstate
+    terraform apply -auto-approve -state=~/cn-lab-pan.tfstate
 
     if [ $? -eq 0 ]; then
         echo -e "\nPanorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
@@ -98,7 +98,7 @@ function deploy_cnseries_lab() {
 
     # Deploy resources
     echo -e "\nDeploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust with CN-Series on AWS"
-    terraform apply -auto-approve -state=~/cn-lab.tfstate
+    terraform apply -auto-approve -state=~/cn-lab-cn.tfstate
 
     if [ $? -eq 0 ]; then
         echo -e "\nAWS Zero Trust Reference Architecture with CN-Series Lab Deployment Completed successfully!"
