@@ -4,6 +4,31 @@
 
 # Zero Trust AWS CN-Series
 
+# modifications to original lab
+for the cn series lab please clone this repo instead:
+```
+cd /tmp
+git clone https://github.com/rweglarz/pan-lab-aws-cn-series-zero-trust
+```
+
+we need to ssh to panorama and update/ generate new uath-key
+```
+❯ ssh admin@<yourip> -o HostKeyAlgorithms=+ssh-rsa    
+request bootstrap vm-auth-key generate lifetime 1000
+```
+replace with the new value PAN_PANORAMA_AUTH_KEY in:
+```
+/tmp/pan-lab-aws-cn-series-zero-trust/terraform/cnseries/cn-series/pan-cn-mgmt-secret.yaml
+```
+
+to get the output of panorama ip (and as Peter pointed out it can be fetched from aws console)
+```
+cd /tmp/pan-lab-aws-cn-series-zero-trust/terraform/panorama
+$ terraform output -state=/home/cloudshell-user/cn-lab-pan.tfstate 
+PANORAMA_IP_ADDRESS = "34...."
+```
+
+
 ## QwikLab Guide
 
 # Overview
